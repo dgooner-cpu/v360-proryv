@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Фокус-група «Прорив» — Visual360</title>
+<meta name="description" content="7 тижнів у команді до 8 людей під ментором: великий замовник, пасивний дохід з маркетплейсів і вихід на фриланс та в студії. Перший набір — 8 місць.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--
+  ЧЕРНЕТКА СТРУКТУРИ І ТЕКСТІВ. Дизайн — базовий.
+  Жовті плашки .todo = дані, яких ще немає (ментор, замовник, частка, дати). Заповнити перед запуском.
+  Форма шле ті самі поля, що й v360-landing (name, email, phone, page_url, zid) на LEAD_ENDPOINT.
+  Meta Pixel / Clarity не підключені — додати перед запуском.
+-->
+<style>
+  :root{
+    --bg:#ffffff; --bg2:#f6f5f2; --ink:#141414; --ink2:#55534f; --line:#e6e3dd;
+    --acc:#ff6b35; --acc-ink:#ffffff; --dark:#121212; --dark2:#1d1d1d; --todo:#fff3b0;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  section{padding:72px 0}
+  .alt{background:var(--bg2)}
+  .dark{background:var(--dark);color:#f3f1ec}
+  .dark .muted{color:#a9a59d}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin-bottom:12px}
+  h1{font-size:clamp(34px,6vw,60px);line-height:1.05;margin:0 0 18px;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:clamp(26px,4vw,40px);line-height:1.12;margin:0 0 16px;font-weight:800;letter-spacing:-.01em}
+  h3{font-size:19px;margin:0 0 8px;font-weight:700}
+  p{margin:0 0 14px}
+  .lead{font-size:clamp(17px,2.1vw,20px);color:var(--ink2);max-width:720px}
+  .dark .lead{color:#cfcbc3}
+  .muted{color:var(--ink2)}
+  .small{font-size:14px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--acc);color:var(--acc-ink);font-weight:700;font-size:17px;padding:17px 28px;border-radius:12px;border:0;cursor:pointer;text-decoration:none;transition:transform .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-note{font-size:13px;color:var(--ink2);margin-top:10px}
+  .dark .btn-note{color:#a9a59d}
+  .todo{background:var(--todo);color:#3a3000;padding:1px 6px;border-radius:4px;font-weight:600}
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}
+  .alt .card{background:#fff}
+  .dark .card{background:var(--dark2);border-color:#2c2c2c}
+  .num{font-size:13px;font-weight:800;color:var(--acc);margin-bottom:8px;letter-spacing:.05em}
+  .center{text-align:center} .center .lead{margin-left:auto;margin-right:auto}
+  .mt{margin-top:32px}
+
+  /* hero */
+  .hero{padding:56px 0 64px;background:var(--dark);color:#f6f3ee}
+  .hero .lead{color:#d6d2ca}
+  .topbar{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#a9a59d;margin-bottom:44px;gap:12px;flex-wrap:wrap}
+  .topbar b{color:#fff;font-size:16px}
+  .seats{display:inline-flex;gap:8px;align-items:center;background:#2a1a12;color:#ffb08f;border:1px solid #5a2d18;border-radius:999px;padding:6px 14px;font-weight:600;font-size:13px}
+  .hero-facts{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 32px}
+  .fact{border:1px solid #333;border-radius:12px;padding:12px 16px;min-width:140px}
+  .fact b{display:block;font-size:22px;color:#fff}
+  .fact span{font-size:13px;color:#a9a59d}
+
+  /* streams */
+  .stream{position:relative}
+  .stream .tag{display:inline-block;font-size:12px;font-weight:700;background:#fff0e9;color:#c2461b;border-radius:6px;padding:3px 8px;margin-bottom:12px}
+
+  /* compare */
+  .cmp{width:100%;border-collapse:collapse;font-size:15px;background:#fff;border-radius:14px;overflow:hidden}
+  .cmp th,.cmp td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .cmp th{background:#efede8;font-size:14px}
+  .cmp td:last-child,.cmp th:last-child{background:#fff6f1}
+  .cmp-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+
+  /* client */
+  .client{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:0}
+  .steps li{counter-increment:s;position:relative;padding:0 0 18px 46px}
+  .steps li:before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .models{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .models img{border-radius:12px;background:#fff;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--line)}
+
+  /* weeks */
+  .weeks{display:grid;gap:12px}
+  .week{display:grid;grid-template-columns:110px 1fr 1fr;gap:18px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .week .w{font-weight:800;color:var(--acc)}
+  .week .res{font-size:14px;color:var(--ink2);border-left:2px solid var(--line);padding-left:16px}
+  .week .res b{display:block;color:var(--ink);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+
+  /* people */
+  .person{display:flex;gap:16px;align-items:flex-start}
+  .ph{flex:0 0 72px;height:72px;border-radius:50%;background:#e9e6df;display:flex;align-items:center;justify-content:center;font-size:12px;color:#8a867e;text-align:center}
+
+  /* includes */
+  .inc{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+  .inc li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px dashed var(--line)}
+  .inc li span:last-child{color:var(--ink2);white-space:nowrap}
+
+  /* price */
+  .price-box{max-width:620px;margin:0 auto;background:#fff;color:var(--ink);border-radius:20px;padding:36px;text-align:center}
+  .price{font-size:64px;font-weight:800;line-height:1;margin:8px 0}
+  .price-sub{color:var(--ink2);margin-bottom:22px}
+  .payback{background:var(--bg2);border-radius:14px;padding:18px;text-align:left;margin:22px 0;font-size:15px}
+  .payback div{display:flex;justify-content:space-between;gap:12px;padding:6px 0}
+
+  /* fit */
+  .fit .card h3{display:flex;gap:8px;align-items:center}
+  .fit ul{padding-left:20px;margin:0} .fit li{margin-bottom:8px}
+
+  /* faq */
+  details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:10px}
+  summary{font-weight:700;cursor:pointer;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary:after{content:"+";float:right;color:var(--acc);font-weight:800}
+  details[open] summary:after{content:"–"}
+  details p{margin:12px 0 0;color:var(--ink2)}
+
+  /* creds */
+  .creds{padding:40px 0 48px;background:var(--bg2)}
+  .creds-title{text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink2);margin-bottom:20px}
+  .cred{display:flex;gap:16px;align-items:center;text-align:left;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;font:inherit;color:inherit;width:100%}
+  .cred-thumb{position:relative;flex:0 0 64px;height:64px;border:1px solid var(--line);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;padding:6px}
+  .cred-thumb img{max-height:100%;object-fit:contain}
+  .cred-thumb:after{content:"⌕";position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#fff;font-size:14px;line-height:22px;text-align:center}
+  .cred b.t{display:block;font-size:16px}
+  .cred .s{font-size:13px;color:var(--ink2)} .cred .s b{color:var(--acc)}
+  .cred .n{font-size:12px;color:#8a867e;font-style:italic;margin-top:4px}
+  .creds-hint{text-align:center;font-size:13px;color:#8a867e;margin:16px 0 0}
+  .cert{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;z-index:60}
+  .cert.open{display:flex}
+  .cert img{max-height:82vh;max-width:100%;border-radius:8px}
+  .cert a{color:#fff;font-weight:600}
+  .cert button{position:absolute;right:16px;top:12px;background:none;border:0;color:#fff;font-size:28px;cursor:pointer}
+  .stars{margin-top:22px;font-size:14px;color:#cfcbc3} .stars span{color:#ffb400;letter-spacing:2px;margin-right:8px}
+  /* path markers */
+  .path{display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+  .path-num{width:38px;height:38px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .path-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2)}
+  .path-label b{display:block;font-size:15px;color:var(--ink);text-transform:none;letter-spacing:0}
+  /* catalog */
+  .cat{display:grid;grid-auto-flow:column;grid-auto-columns:200px;gap:14px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+  .cat-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;scroll-snap-align:start}
+  .cat-card img{aspect-ratio:1/1;object-fit:cover;width:100%}
+  .cat-card .m{padding:12px 14px}
+  .cat-card .nm{font-weight:700;font-size:14px}
+  .cat-card .inf{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);margin-top:4px}
+  .cat-card .inf .pr{color:var(--acc);font-weight:800;font-size:15px}
+  .cat-tag{position:absolute;left:8px;top:8px;background:#fff;border-radius:6px;font-size:11px;font-weight:700;padding:3px 7px}
+  .cat-hint{font-size:13px;color:var(--ink2);margin:20px 0 10px}
+  /* calc */
+  .calc{max-width:640px;margin:32px auto 0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}
+  .calc-row{margin-bottom:20px}
+  .calc-label{display:flex;justify-content:space-between;font-weight:600;margin-bottom:8px}
+  .calc-label span:last-child{color:var(--acc);font-weight:800}
+  .calc input[type=range]{width:100%;padding:0;border:0;accent-color:var(--acc)}
+  .calc-res div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .calc-res div span:last-child{font-weight:700}
+  .calc-pay{display:flex;justify-content:space-between;gap:12px;background:#fff0e9;border-radius:12px;padding:14px 16px;margin-top:16px;font-weight:700}
+  .calc-pay span:last-child{color:#c2461b}
+  /* video */
+  .video{display:grid;grid-template-columns:1fr 1.2fr;gap:28px;align-items:center}
+  .video-cover{position:relative;border-radius:16px;overflow:hidden;background:#000}
+  .video-cover:after{content:"▶";position:absolute;inset:0;margin:auto;width:68px;height:68px;border-radius:50%;background:var(--acc);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center}
+  .video ul{padding-left:20px} .video li{margin-bottom:8px}
+  @media (max-width:860px){.video{grid-template-columns:1fr}}
+
+  /* sticky cta mobile */
+  .sticky{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(18,18,18,.96);display:none;z-index:40}
+  .sticky .btn{width:100%;padding:14px}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+  .modal.open{display:flex}
+  .modal-box{background:#fff;border-radius:18px;max-width:440px;width:100%;padding:28px;position:relative}
+  .modal-box h3{font-size:22px}
+  .x{position:absolute;right:14px;top:10px;background:none;border:0;font-size:26px;cursor:pointer;color:#999}
+  label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+  input,select{width:100%;padding:13px 14px;border:1px solid #d6d2ca;border-radius:10px;font:inherit}
+  .phone{display:grid;grid-template-columns:110px 1fr;gap:8px}
+  .err{color:#c0392b;font-size:13px;min-height:18px;margin-top:8px}
+  .modal-box .btn{width:100%;margin-top:14px}
+
+  @media (max-width:860px){
+    .g3,.g4{grid-template-columns:1fr 1fr}
+    .client{grid-template-columns:1fr}
+    .week{grid-template-columns:1fr;gap:8px}
+    .week .res{border-left:0;border-top:1px solid var(--line);padding:10px 0 0}
+  }
+  @media (max-width:600px){
+    section{padding:52px 0}
+    .wrap{padding:0 16px}
+    .g2,.g3,.g4{grid-template-columns:1fr}
+    .btn{width:100%}
+    .sticky{display:block}
+    body{padding-bottom:72px}
+    .price{font-size:52px}
+    .price-box{padding:26px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="topbar">
+      <b>Visual360</b>
+      <span class="seats">● Перший набір · 8 місць · старт <span class="todo">дата</span></span>
+    </div>
+    <div class="eyebrow">Фокус-група «Прорив» · навчання + реальний проєкт</div>
+    <h1>7 тижнів у команді, яка працює на великого замовника</h1>
+    <p class="lead">Спочатку ви з нуля проходите навчання у своєму темпі. Потім — 7 тижнів у команді до 8 людей під ментором: разом виконуєте велике замовлення для компанії, наприклад 300 позицій для меблевої фабрики, і отримуєте свою частку оплати. Паралельно збираєте портфель для пасивного доходу на маркетплейсах і виходите з кейсом, з яким беруть на фриланс і в топові студії.</p>
+    <div class="hero-facts">
+      <div class="fact"><b>з нуля</b><span>досвід не потрібен</span></div>
+      <div class="fact"><b>3</b><span>джерела доходу</span></div>
+      <div class="fact"><b>14</b><span>живих зустрічей</span></div>
+      <div class="fact"><b>до 8</b><span>людей у групі</span></div>
+      <div class="fact"><b>1</b><span>великий замовник</span></div>
+    </div>
+    <a href="#apply" class="btn js-open">Забронювати місце у «Прориві» →</a>
+    <div class="btn-note">Залишаєте заявку → 15-хвилинний дзвінок → бронюєте місце. Без вебінарів.</div>
+    <div class="stars"><span>★★★★★</span>13 500+ випускників · Партнер Autodesk · 13 років на ринку</div>
+  </div>
+</header>
+
+<!-- 1a. ПІДТВЕРДЖЕННЯ (як на v360-landing) -->
+<div class="creds">
+  <div class="wrap">
+    <div class="creds-title">Visual360 — підтверджено</div>
+    <div class="grid g3">
+      <button type="button" class="cred" data-cert="autodesk">
+        <span class="cred-thumb"><img src="https://lesson.visual360-studio.com/v360-landing/creds/autodesk-thumb.png" alt="Autodesk Authorized Training Center" loading="lazy"></span>
+        <span><b class="t">Партнер Autodesk</b><span class="s">Authorized Training Center · ліцензія <b>№ORG10545</b></span><div class="n">Викладачі пройшли сертифікацію в Autodesk, навчальна програма затверджена виробником ПЗ.</div></span>
+      </button>
+      <button type="button" class="cred" data-cert="award">
+        <span class="cred-thumb"><img src="https://lesson.visual360-studio.com/v360-landing/creds/award-thumb.png" alt="Top Ukrainian Award 2025" loading="lazy"></span>
+        <span><b class="t">Вибір країни 2025</b><span class="s">«Курси 3D-візуалізації року» · <b>Top Ukrainian Award</b></span></span>
+      </button>
+      <button type="button" class="cred" data-cert="iso">
+        <span class="cred-thumb"><img src="https://lesson.visual360-studio.com/v360-landing/creds/iso-badge.png" alt="ISO 9001" loading="lazy"></span>
+        <span><b class="t">Сертифікат ISO 9001</b><span class="s">EN ISO 9001:2015 · видано <b>ECJiP</b>, березень 2026</span><div class="n">Міжнародний стандарт якості — процеси навчання пройшли аудит ECJiP.</div></span>
+      </button>
+    </div>
+    <p class="creds-hint">Натисніть на зображення, щоб відкрити повнорозмірну версію</p>
+  </div>
+</div>
+
+
+<div class="path"><span class="path-num">01</span><span class="path-label">Етап 1<b>Де ви зараз</b></span></div>
+
+<!-- 2. ПРОБЛЕМА -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Чесно</div>
+    <h2>Навичка є. Стабільних грошей — ні</h2>
+    <p class="lead">Більшість після навчання застрягає в одній точці: вміння вже є, а що з ним робити далі — незрозуміло.</p>
+    <div class="grid g3 mt">
+      <div class="card"><h3>Немає першого серйозного клієнта</h3><p class="muted">Без кейсу не беруть на великі замовлення, а без великих замовлень немає кейсу. Замкнене коло.</p></div>
+      <div class="card"><h3>Пасивний дохід росте повільно</h3><p class="muted">Кілька моделей на маркетплейсі — це перші продажі, а не друга зарплата. Каталог треба будувати системно.</p></div>
+      <div class="card"><h3>Поодинці важко тримати темп</h3><p class="muted">Без дедлайнів, перевірки і людей поруч робота розтягується на місяці або зупиняється зовсім.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">02</span><span class="path-label">Етап 2<b>Що таке «Прорив»</b></span></div>
+
+<!-- 3. ТРИ ДЖЕРЕЛА -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Що таке «Прорив»</div>
+    <h2>Навчання, яке закінчується реальним проєктом</h2>
+    <p class="lead">Звичайний курс закінчується сертифікатом. «Прорив» — великим замовленням, грошима і кейсом. Шлях складається з двох етапів.</p>
+    <div class="grid g2 mt">
+      <div class="card"><div class="num">ЕТАП 1 · У ВАШОМУ ТЕМПІ</div><h3>Навчання з нуля</h3><p class="muted">Освоюєте професію з нуля, і вас ведуть троє людей. Кожен проходить у своєму темпі — хтось швидше, хтось довше.</p><ul class="muted" style="padding-left:20px;margin:0"><li><b>Викладач</b> раз на тиждень збирає групу на Zoom і розбирає модуль.</li><li><b>Перевіряючий</b> приймає ваші роботи і каже, що доробити.</li><li><b>Куратор</b> тримає дедлайни, відповідає в чаті і не дає зупинитися.</li></ul></div>
+      <div class="card"><div class="num">ЕТАП 2 · 7 ТИЖНІВ</div><h3>Проєкт з ментором і замовником</h3><p class="muted">Коли ви готові, заходите в команду до 8 людей. Ментор, великий замовник, дві живі зустрічі на тиждень. За 7 тижнів — виконане замовлення, ваша частка оплати і вихід на ринок.</p></div>
+    </div>
+    <p class="lead mt">У результаті у вас три джерела доходу:</p>
+    <div class="grid g3 mt">
+      <div class="card stream">
+        <span class="tag">Джерело 1</span>
+        <h3>Великий замовник</h3>
+        <p class="muted">Група разом виконує замовлення для компанії: фабрики, бренду, виробника. Кожен отримує свою частку оплати і реальний B2B-кейс.</p>
+      </div>
+      <div class="card stream">
+        <span class="tag">Джерело 2</span>
+        <h3>Пасивний дохід</h3>
+        <p class="muted">Паралельно збираєте свій портфель цифрових активів на міжнародних маркетплейсах (TurboSquid, CGTrader). Один раз зробили — продається роками.</p>
+      </div>
+      <div class="card stream">
+        <span class="tag">Джерело 3</span>
+        <h3>Фриланс і студії</h3>
+        <p class="muted">З кейсом великого замовника і рекомендацією ментора виходите на прямих клієнтів і на співбесіди в топові студії.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">03</span><span class="path-label">Етап 3<b>Відео, яке все пояснює</b></span></div>
+
+<!-- 3a. ВІДЕО ЗАСНОВНИКА (як на v360-landing) -->
+<section class="dark">
+  <div class="wrap video">
+    <div class="video-cover"><img src="https://lesson.visual360-studio.com/v360-landing/speaker/viktor-thumb-9min.jpg" alt="Відео від засновника Visual360" loading="lazy"></div>
+    <div>
+      <div class="eyebrow">Подивіться перед заявкою</div>
+      <h2>Засновник Visual360 пояснює, як працює «Прорив»</h2>
+      <ul class="muted">
+        <li><b style="color:#fff">Як ви потрапляєте в команду</b> великого проєкту після навчання</li>
+        <li><b style="color:#fff">Звідки гроші:</b> замовник, маркетплейси, фриланс</li>
+        <li><b style="color:#fff">Чому група до 8 людей</b> і навіщо ментор</li>
+        <li><b style="color:#fff">Усі за і проти</b> — щоб ви зрозуміли, чи підходить це вам</li>
+      </ul>
+      <p class="small"><span class="todo">Потрібне нове відео під «Прорив» (60–90 с або 6 хв). Зараз стоїть обкладинка зі старого лендингу.</span></p>
+      <a href="#apply" class="btn js-open">Залишити заявку →</a>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">04</span><span class="path-label">Етап 4<b>Великий замовник</b></span></div>
+
+<!-- 4. ВЕЛИКИЙ ЗАМОВНИК -->
+<section>
+  <div class="wrap client">
+    <div>
+      <div class="eyebrow">Головне в «Прориві»</div>
+      <h2>Один замовник на всю групу</h2>
+      <p class="lead">Поодинці новачка не пустять на замовлення в 300 позицій. Командою з ментором — пустять.</p>
+      <ol class="steps mt">
+        <li><b>Ми знаходимо замовника під групу.</b> <span class="muted">Компанія, якій потрібні цифрові копії товарів для каталогу, сайту, маркетплейсів або виробництва. Замовник першого набору: <span class="todo">галузь / назва</span>, обсяг <span class="todo">N</span> моделей.</span></li>
+        <li><b>Ментор ділить замовлення між учасниками.</b> <span class="muted">Кожен отримує свій блок позицій під свій рівень.</span></li>
+        <li><b>Ви робите, ментор перевіряє.</b> <span class="muted">Кожна позиція проходить контроль якості перед здачею, як у справжній студії.</span></li>
+        <li><b>Здаємо замовнику і отримуємо оплату.</b> <span class="muted">Ваша частка: <span class="todo">≈ $___</span>, залежить від кількості прийнятих позицій.</span></li>
+        <li><b>Кейс іде у ваше портфоліо.</b> <span class="muted">З назвою замовника, обсягом і відгуком. З таким кейсом говорять уже з іншими клієнтами.</span></li>
+      </ol>
+    </div>
+    <div>
+      <div class="models">
+        <img src="https://lesson.visual360-studio.com/v360-landing/models/bed-oak.png" alt="Дубове ліжко" loading="lazy">
+        <img src="https://lesson.visual360-studio.com/v360-landing/models/armchair.png" alt="Крісло" loading="lazy">
+        <img src="https://lesson.visual360-studio.com/v360-landing/models/wardrobe.png" alt="Шафа" loading="lazy">
+        <img src="https://lesson.visual360-studio.com/v360-landing/models/dining-set.png" alt="Обідня група" loading="lazy">
+        <img src="https://lesson.visual360-studio.com/v360-landing/models/desk.png" alt="Стіл" loading="lazy">
+        <img src="https://lesson.visual360-studio.com/v360-landing/models/bar-stools.png" alt="Барні стільці" loading="lazy">
+      </div>
+      <p class="small muted mt">Приклад: каталог меблевої фабрики. Кожна позиція — окрема цифрова копія товару.</p>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">05</span><span class="path-label">Етап 5<b>Ваш пасивний дохід</b></span></div>
+
+<!-- 4a. КАТАЛОГ (як на v360-landing) -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">📦 Ваш цифровий капітал</div>
+    <h2>Що працюватиме на вас після проєкту</h2>
+    <p class="lead">Усе, що ви вмієте робити для замовника, можна виставити і на маркетплейс. Один раз зробили — продається знову і знову. Приклади з реальними цінниками та середніми продажами за місяць на TurboSquid.</p>
+    <div class="cat-hint">Гортай вбік →</div>
+    <div class="cat">
+      <div class="cat-card"><span class="cat-tag">🔥 Bestseller</span><img src="https://lesson.visual360-studio.com/v360-landing/models/vase.png" alt="Керамічна ваза" loading="lazy"><div class="m"><div class="nm">Керамічна ваза</div><div class="inf"><span class="pr">$28</span><span><b>124</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><img src="https://lesson.visual360-studio.com/v360-landing/models/mug.png" alt="Керамічний кухоль" loading="lazy"><div class="m"><div class="nm">Керамічний кухоль</div><div class="inf"><span class="pr">$32</span><span><b>98</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><span class="cat-tag">⭐ New</span><img src="https://lesson.visual360-studio.com/v360-landing/models/plant.png" alt="Рослина в горщику" loading="lazy"><div class="m"><div class="nm">Рослина в горщику</div><div class="inf"><span class="pr">$26</span><span><b>84</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><span class="cat-tag">💎 Premium</span><img src="https://lesson.visual360-studio.com/v360-landing/models/candle.png" alt="Соєва свічка" loading="lazy"><div class="m"><div class="nm">Соєва свічка</div><div class="inf"><span class="pr">$22</span><span><b>67</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><span class="cat-tag">⭐ Top</span><img src="https://lesson.visual360-studio.com/v360-landing/models/teddy-bear.png" alt="Плюшевий ведмідь" loading="lazy"><div class="m"><div class="nm">Плюшевий ведмідь</div><div class="inf"><span class="pr">$32</span><span><b>88</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><img src="https://lesson.visual360-studio.com/v360-landing/models/bed-oak.png" alt="Дубове ліжко" loading="lazy"><div class="m"><div class="nm">Дубове ліжко</div><div class="inf"><span class="pr">$34</span><span><b>38</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><img src="https://lesson.visual360-studio.com/v360-landing/models/wardrobe.png" alt="Шафа-купе" loading="lazy"><div class="m"><div class="nm">Шафа-купе</div><div class="inf"><span class="pr">$32</span><span><b>29</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><span class="cat-tag">💎 Premium</span><img src="https://lesson.visual360-studio.com/v360-landing/models/decor-set.png" alt="Декор-композиція" loading="lazy"><div class="m"><div class="nm">Декор-композиція</div><div class="inf"><span class="pr">$38</span><span><b>24</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><span class="cat-tag">⭐ New</span><img src="https://lesson.visual360-studio.com/v360-landing/models/armchair-blue.png" alt="М'яке крісло" loading="lazy"><div class="m"><div class="nm">М'яке крісло</div><div class="inf"><span class="pr">$36</span><span><b>47</b> прод./міс</span></div></div></div>
+      <div class="cat-card"><span class="cat-tag">🔥 Hot</span><img src="https://lesson.visual360-studio.com/v360-landing/models/dining-set.png" alt="Обідня група" loading="lazy"><div class="m"><div class="nm">Обідня група</div><div class="inf"><span class="pr">$89</span><span><b>18</b> прод./міс</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4b. КАЛЬКУЛЯТОР (як на v360-landing, окупність рахується від $1200) -->
+<section>
+  <div class="wrap center">
+    <div class="eyebrow">🔥 Калькулятор пасивного доходу</div>
+    <h2>Скільки буде ваш каталог через рік?</h2>
+    <p class="lead">Тягніть слайдери — побачите, як росте дохід із кожною новою позицією. Без магії, просто математика.</p>
+    <div class="calc" style="text-align:left">
+      <div class="calc-row"><div class="calc-label"><span>Моделей на місяць</span><span id="cModelsV">7 моделей</span></div><input type="range" id="cModels" min="5" max="20" value="7"></div>
+      <div class="calc-row"><div class="calc-label"><span>Середня ціна моделі</span><span id="cPriceV">$40</span></div><input type="range" id="cPrice" min="20" max="100" step="5" value="40"></div>
+      <div class="calc-res">
+        <div><span>Місяць 1 (старт каталогу)</span><span>$0</span></div>
+        <div><span>Місяць 2 (перші продажі)</span><span id="cM2"></span></div>
+        <div><span>Місяць 3</span><span id="cM3"></span></div>
+        <div><span>Місяць 6</span><span id="cM6"></span></div>
+        <div><span>Місяць 12</span><span id="cM12"></span></div>
+      </div>
+      <div class="calc-pay"><span>$1200 за «Прорив» повертаються тільки з каталогу за</span><span id="cPay"></span></div>
+      <p class="small muted" style="margin:12px 0 0">Це прогноз за тією ж формулою, що й на основному лендингу, а не гарантія. Частка із замовлення групи сюди не входить — вона йде зверху.</p>
+    </div>
+    <a href="#apply" class="btn js-open mt">Розібрати мої цифри на дзвінку →</a>
+  </div>
+</section>
+
+<!-- 5. ПОРІВНЯННЯ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Чим це відрізняється</div>
+    <h2>Самостійно vs «Прорив»</h2>
+    <div class="cmp-wrap mt">
+      <table class="cmp">
+        <tr><th></th><th>Самостійно</th><th>Фокус-група «Прорив»</th></tr>
+        <tr><td><b>Замовники</b></td><td>Шукаєте самі, без кейсів відмовляють</td><td>Великий замовник на групу з першого тижня</td></tr>
+        <tr><td><b>Перевірка</b></td><td>Ніхто не каже, що не так</td><td>Ментор перевіряє кожну позицію</td></tr>
+        <tr><td><b>Темп</b></td><td>Розтягується на місяці</td><td>Задача в понеділок, здача в четвер</td></tr>
+        <tr><td><b>Портфель на маркетплейсах</b></td><td>Кілька моделей «колись»</td><td>Системний каталог з першого тижня</td></tr>
+        <tr><td><b>Вихід на ринок</b></td><td>Резюме без досвіду</td><td>B2B-кейс + рекомендація ментора</td></tr>
+        <tr><td><b>Оточення</b></td><td>Поодинці</td><td>Команда до 8 людей і живі спікери</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">06</span><span class="path-label">Етап 6<b>7 тижнів проєкту</b></span></div>
+
+<!-- 6. ПРОГРАМА -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Програма</div>
+    <h2>Що відбувається за 7 тижнів проєкту</h2>
+    <p class="lead">Цей етап стартує, коли ви пройшли навчання і готові до замовлення. Кожен тиждень закінчується конкретним результатом, який можна показати.</p>
+    <div class="weeks mt">
+      <div class="week"><div class="w">Тиждень 1</div><div><b>Старт студії.</b> Фіксуємо вашу точку А, отримуємо ТЗ замовника, ментор розподіляє ролі і блоки позицій.</div><div class="res"><b>Результат</b>Особистий план на 3 джерела доходу і ваш блок замовлення</div></div>
+      <div class="week"><div class="w">Тиждень 2</div><div><b>Стандарти замовника.</b> Технічні вимоги, пайплайн, тестові позиції. Перша модель у ваш власний портфель.</div><div class="res"><b>Результат</b>Тестові позиції прийняті ментором</div></div>
+      <div class="week"><div class="w">Тиждень 3</div><div><b>Виробничий спринт 1.</b> Робота над замовленням, щоденні питання в чаті, контроль якості в четвер.</div><div class="res"><b>Результат</b>Перша партія позицій готова</div></div>
+      <div class="week"><div class="w">Тиждень 4</div><div><b>Спринт 2 + маркетплейси.</b> Продовжуємо замовлення і викладаємо ваші моделі на TurboSquid і CGTrader.</div><div class="res"><b>Результат</b>Ваші перші моделі виставлені на продаж</div></div>
+      <div class="week"><div class="w">Тиждень 5</div><div><b>Здача і правки.</b> Віддаємо партію замовнику, вносимо правки, оформлюємо кейс.</div><div class="res"><b>Результат</b>Прийнята робота і кейс у портфоліо</div></div>
+      <div class="week"><div class="w">Тиждень 6</div><div><b>Фриланс і студії.</b> Пакуємо портфоліо, готуємо пропозиції прямим клієнтам, тренуємо співбесіду зі спікером зі студії.</div><div class="res"><b>Результат</b>Портфоліо, профілі і відправлені пропозиції</div></div>
+      <div class="week"><div class="w">Тиждень 7</div><div><b>Захист.</b> Закриваємо замовлення, отримуємо оплату, порівнюємо з планом першого тижня.</div><div class="res"><b>Результат</b>Частка з оплати, каталог на маркетплейсах, кейс і план на наступні 3 місяці</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. РИТМ ТИЖНЯ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Як проходить тиждень</div>
+    <h2>Дві живі зустрічі щотижня</h2>
+    <div class="grid g4 mt">
+      <div class="card"><div class="num">ПОНЕДІЛОК</div><h3>Зустріч наживо</h3><p class="muted small">Перші 10 хвилин — статус кожного. Далі ментор ставить задачу тижня, розбирає ТЗ і приклади робіт.</p></div>
+      <div class="card"><div class="num">ВІВТОРОК–СЕРЕДА</div><h3>Робота</h3><p class="muted small">Робите свій блок. Питання в чат — відповідь того ж дня.</p></div>
+      <div class="card"><div class="num">ЧЕТВЕР</div><h3>Контроль якості</h3><p class="muted small">Показуєте результат, ментор розбирає кожну роботу.</p></div>
+      <div class="card"><div class="num">ПІСЛЯ ЧЕТВЕРГА</div><h3>Корекція</h3><p class="muted small">Правки і план на наступний тиждень. Раз на 2 тижні — гостьовий спікер.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">07</span><span class="path-label">Етап 7<b>Хто поруч із вами</b></span></div>
+
+<!-- 8. ХТО ВЕДЕ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Хто веде</div>
+    <h2>Ментор і живі спікери з ринку</h2>
+    <p class="lead">Не записані уроки, а люди, які щодня працюють із замовниками, студіями і маркетплейсами.</p>
+    <div class="grid g2 mt">
+      <div class="card person"><div class="ph">фото</div><div><div class="num">МЕНТОР ГРУПИ</div><h3><span class="todo">Ім'я Прізвище</span></h3><p class="muted small"><span class="todo">Досвід: роки, студії, великі замовники, обсяг виконаних проєктів, дохід на маркетплейсах.</span> Веде групу всі 7 тижнів: розподіляє замовлення, перевіряє кожну позицію, рекомендує сильних учасників студіям.</p></div></div>
+      <div class="card person"><div class="ph">фото</div><div><div class="num">СПІКЕР · СТУДІЯ</div><h3><span class="todo">Ім'я, посада, студія</span></h3><p class="muted small">Як студії наймають, що дивляться в портфоліо, тренування співбесіди.</p></div></div>
+      <div class="card person"><div class="ph">фото</div><div><div class="num">СПІКЕР · МАРКЕТПЛЕЙСИ</div><h3><span class="todo">Ім'я, результат на TurboSquid / CGTrader</span></h3><p class="muted small">Як будувати каталог, які позиції продаються, ціни і просування.</p></div></div>
+      <div class="card person"><div class="ph">фото</div><div><div class="num">СПІКЕР · КЛІЄНТИ</div><h3><span class="todo">Ім'я, фрилансер / власник студії</span></h3><p class="muted small">Де брати прямих клієнтів, як рахувати ціну і вести переговори з компаніями.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. ДОКАЗИ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Чому нам можна довіряти</div>
+    <h2>Visual360 — 13 років на ринку</h2>
+    <div class="grid g3 mt">
+      <div class="card center"><h2 style="margin:0">13 500+</h2><p class="muted small">випускників</p></div>
+      <div class="card center"><h2 style="margin:0">13 років</h2><p class="muted small">на ринку, власна студія й офіс</p></div>
+      <div class="card center"><h2 style="margin:0">4.6 ★</h2><p class="muted small">302 відгуки — можна перевірити самому</p></div>
+    </div>
+    <div class="grid g2 mt" style="align-items:center">
+      <div>
+        <h3>Тестовий потік уже пройшов</h3>
+        <p class="muted">Програму з пасивного доходу на маркетплейсах ми вже протестували на групі. «Прорив» — наступний рівень для тих, хто хоче швидше і більше: з великим замовником і ментором поруч.</p>
+        <p class="muted"><span class="todo">Сюди 2–3 результати тестового потоку: ім'я, скільки моделей, перші продажі, скрін.</span></p>
+      </div>
+      <img src="https://lesson.visual360-studio.com/v360-landing/cases/group-dashboard.png" alt="Результати групи" loading="lazy" style="border-radius:14px;border:1px solid var(--line)">
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">08</span><span class="path-label">Етап 8<b>Що в коробці</b></span></div>
+
+<!-- 10. ЩО ВХОДИТЬ -->
+<section>
+  <div class="wrap" style="max-width:820px">
+    <div class="eyebrow">Що входить</div>
+    <h2>Усе, що потрібно для прориву</h2>
+    <ul class="inc mt">
+      <li><span><b>Навчання з нуля</b>: уроки, практика і перевірка робіт до готовності до проєкту</span><span>у вашому темпі</span></li>
+      <li><span><b>Участь у замовленні великого клієнта</b> + ваша частка оплати</span><span>головне</span></li>
+      <li><span><b>14 живих зустрічей з ментором</b> — дві на тиждень</span><span>7 тижнів</span></li>
+      <li><span><b>Перевірка кожної роботи</b> перед здачею замовнику</span><span>щотижня</span></li>
+      <li><span><b>Гостьові зустрічі зі спікерами</b>: студія, маркетплейси, клієнти</span><span>3 зустрічі</span></li>
+      <li><span><b>Запуск вашого каталогу</b> на TurboSquid і CGTrader</span><span>з 4-го тижня</span></li>
+      <li><span><b>Пакування портфоліо</b> і тренування співбесіди</span><span>6-й тиждень</span></li>
+      <li><span><b>Рекомендація ментора</b> студіям-партнерам для сильних учасників</span><span>після захисту</span></li>
+      <li><span><b>Закритий чат групи</b> з відповіддю того ж дня</span><span>7 тижнів</span></li>
+      <li><span><b>Бонус:</b> шаблони пропозицій компаніям, калькулятор ціни замовлення</span><span>назавжди</span></li>
+      <li><span><b>Бонус:</b> місяць у чаті випускників «Прориву» після захисту</span><span>+1 місяць</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 11. ЦІНА -->
+<section class="dark" id="price">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">Ціна участі</div>
+      <h2>Інвестиція, яка частково повертається ще під час групи</h2>
+    </div>
+    <div class="price-box mt">
+      <div class="small muted">Фокус-група «Прорив» · перший набір</div>
+      <div class="price">$1200</div>
+      <div class="price-sub">або 3 платежі по $400 · офіційний договір</div>
+      <div class="payback">
+        <div><span>Ваша частка із замовлення групи</span><b><span class="todo">≈ $___</span></b></div>
+        <div><span>Каталог на маркетплейсах</span><b>продається роками</b></div>
+        <div><span>Кейс великого замовника</span><b>вхід на фриланс і в студії</b></div>
+      </div>
+      <a href="#apply" class="btn js-open" style="width:100%">Забронювати місце →</a>
+      <div class="btn-note">8 місць. Якщо в наборі менше 5 людей — не стартуємо і повертаємо оплату.</div>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">09</span><span class="path-label">Етап 9<b>Знімаємо ризик</b></span></div>
+
+<!-- 12. ГАРАНТІЇ / ПРАВИЛА -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Наша частина</div>
+    <h2>Що ми беремо на себе</h2>
+    <div class="grid g3 mt">
+      <div class="card"><h3>Доводимо до кінця</h3><p class="muted">Якщо ви ходили на зустрічі і здавали задачі, але не встигли закрити свій блок або вийти на клієнтів, ментор веде вас ще 4 тижні без доплати.</p></div>
+      <div class="card"><h3>Чесно про гроші</h3><p class="muted">Ваша частка залежить від кількості прийнятих позицій. Дохід із маркетплейсів і фрилансу — мета, а не гарантія: заробляєте ви, ми даємо систему, замовника і ментора.</p></div>
+      <div class="card"><h3>Правила групи</h3><p class="muted">Дві поважні причини для пропуску. Без причини: спершу попередження, далі перехід у наступний набір зі збереженим місцем. Ментора ніхто не замінює: якщо він захворів, зустріч переносимо. Усе — в договорі до оплати.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13. ДЛЯ КОГО -->
+<section class="alt fit">
+  <div class="wrap">
+    <div class="eyebrow">Відбір</div>
+    <h2>Беремо не всіх</h2>
+    <p class="lead">Група працює на реального замовника, тому кожен учасник впливає на результат усіх. На дзвінку ми чесно скажемо, чи підходить вам цей набір.</p>
+    <div class="grid g2 mt">
+      <div class="card"><h3>✓ Вам до нас, якщо</h3><ul>
+        <li>ви починаєте з нуля або вже маєте базу — навчимо всьому, що потрібно для проєкту</li>
+        <li>готові виділяти <span class="todo">X</span> годин на тиждень і бути на двох зустрічах</li>
+        <li>хочете не просто «вчитися», а працювати на реальних замовників і заробляти в доларах</li>
+        <li>вам підходить робота в команді і дедлайни</li>
+      </ul></div>
+      <div class="card"><h3>✕ Не беріть, якщо</h3><ul>
+        <li>зараз немає часу на щотижневі задачі</li>
+        <li>чекаєте, що все зроблять за вас</li>
+        <li>потрібна гарантія конкретної суми доходу</li>
+        <li>хочете просто подивитися уроки без практики і дедлайнів</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13a. СТРАХИ (як на v360-landing) -->
+<section>
+  <div class="wrap" style="max-width:820px">
+    <div class="eyebrow">🤔 Поговоримо чесно</div>
+    <h2>5 страхів, які ми чуємо на кожному дзвінку</h2>
+    <p class="lead">Виберіть свій — отримайте відверту відповідь. Без рекламних обіцянок.</p>
+    <div class="mt">
+      <details><summary>«Мені доведеться звільнитись?»</summary><p>Ні. Навчання проходите паралельно з роботою, у своєму темпі. На 7 тижнів проєкту потрібні дві зустрічі на тиждень і час на свій блок задач. Звільнятися варто тільки тоді, коли новий дохід реально замінив старий.</p></details>
+      <details><summary>«А якщо я не доведу до кінця? Я вже кидала навчання»</summary><p>Саме тому ви не самі. На навчанні вас ведуть викладач, перевіряючий і куратор. На проєкті — ментор і група до 8 людей, де кожен щочетверга показує результат. Кинути в команді набагато важче, ніж наодинці з відеоуроками.</p></details>
+      <details><summary>«Мені за 40, вже не той ресурс»</summary><p>Замовник і покупець на маркетплейсі не бачать ваш вік. Вони бачать роботу і ціну. Посидючість і уважність тут важать більше за швидкість.</p></details>
+      <details><summary>«AI завтра все замінить»</summary><p>AI вже прискорює частину задач, і ми вчимо ним користуватись. Але для виробництва потрібні точні технічні вимоги, які AI не закриває. Ви працюєте разом з AI, а не проти нього.</p></details>
+      <details><summary>«Я не технар, мій комп'ютер — для серіалів»</summary><p>Навчання з нуля і з практикою з першого дня. Перед стартом перевіримо ваш ноутбук: якщо техніка не потягне, скажемо чесно до оплати, а не після.</p></details>
+      <details><summary>«Я не вірю онлайн-школам»</summary><p>Правильно робите. Тому не просимо вірити на слово: є 302 відгуки з оцінкою 4.6, студія, офіс, партнерство з Autodesk і випускники, яких можна знайти і спитати. А в «Прориві» результат видно одразу — це здане замовлення і оплата.</p></details>
+    </div>
+    <div class="center mt"><a href="#apply" class="btn js-open">Обговорити мій випадок на дзвінку →</a></div>
+  </div>
+</section>
+
+<!-- 14. FAQ -->
+<section class="alt">
+  <div class="wrap" style="max-width:820px">
+    <div class="eyebrow">Питання</div>
+    <h2>Що питають перед заявкою</h2>
+    <div class="mt">
+      <details><summary>Я ніколи цим не займався. Мені підійде?</summary><p>Так. Спочатку ви проходите навчання з нуля у своєму темпі. Коли рівень дозволяє, заходите в 7 тижнів проєкту з ментором і замовником.</p></details>
+      <details><summary>Скільки триває навчання до проєкту?</summary><p>Кожен по-різному: залежить від вашого темпу і часу на тиждень. <span class="todo">Орієнтир: ___ місяців при ___ годинах на тиждень.</span> 7 тижнів — це вже етап проєкту, де ви працюєте на замовника і заробляєте.</p></details>
+      <details><summary>Чим «Прорив» відрізняється від звичайного курсу?</summary><p>Звичайний курс закінчується сертифікатом. «Прорив» закінчується реальним проєктом: ви вчитеся в групі до 8 людей з ментором і одразу працюєте на великого замовника, плюс запускаєте свій каталог і виходите на фриланс та студії.</p></details>
+      <details><summary>Звідки береться великий замовник?</summary><p>Замовника під групу знаходить команда Visual360 до старту набору. Для першого набору це <span class="todo">галузь / компанія, обсяг</span>.</p></details>
+      <details><summary>Скільки я заробляю на замовленні?</summary><p>Оплата замовника ділиться між учасниками за кількістю прийнятих позицій. Орієнтир для першого набору: <span class="todo">≈ $___ на учасника</span>.</p></details>
+      <details><summary>А якщо я не встигну за групою?</summary><p>Ментор розподіляє блоки під рівень кожного. Якщо ви виконували умови, але не закрили свій блок, вас ведуть ще 4 тижні без доплати.</p></details>
+      <details><summary>Мене справді візьмуть у студію?</summary><p>Гарантувати працевлаштування не може ніхто. Ми даємо те, що реально відкриває двері: кейс великого замовника, підготовлене портфоліо, тренування співбесіди і рекомендацію ментора для сильних учасників.</p></details>
+      <details><summary>Можна оплатити частинами?</summary><p>Так, трьома платежами по $400 за офіційним договором.</p></details>
+      <details><summary>Коли старт і скільки триває?</summary><p>Навчання можна почати одразу після оплати і проходити у своєму темпі. Етап проєкту — 7 тижнів, найближчий старт групи <span class="todo">дата</span>. Набір раз на квартал, 8 місць.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="path"><span class="path-num">🚀</span><span class="path-label">Фініш<b>Час бронювати місце</b></span></div>
+
+<!-- 15. ФІНАЛЬНИЙ CTA -->
+<section class="dark" id="apply">
+  <div class="wrap center">
+    <div class="eyebrow">Перший набір · 8 місць</div>
+    <h2>Від навчання з нуля — до великого проєкту і перших грошей</h2>
+    <p class="lead">Нова професія, 7 тижнів у команді з ментором, кейс великого замовника в портфоліо, каталог на маркетплейсах і план виходу на ринок.</p>
+    <p class="lead">Або все залишиться як зараз. Залиште заявку: на 15-хвилинному дзвінку розберемо, де ви зараз, і чесно скажемо, чи варто вам іти в цей набір.</p>
+    <a href="#apply" class="btn js-open mt">Забронювати місце у «Прориві» →</a>
+    <div class="btn-note">Заявки приймаємо до <span class="todo">дата</span> або до заповнення 8 місць.</div>
+  </div>
+</section>
+
+<footer class="wrap small muted" style="padding:28px 20px 40px">
+  Visual360 · Autodesk Authorized Training Center · ліцензія №ORG10545 · © 2026
+</footer>
+
+<div class="sticky"><a href="#apply" class="btn js-open">Забронювати місце · $1200</a></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-labelledby="mTitle">
+    <button class="x" type="button" aria-label="Закрити">×</button>
+    <div id="formView">
+      <h3 id="mTitle">Заявка у фокус-групу «Прорив»</h3>
+      <p class="muted small">Передзвонимо, проведемо 15-хвилинний дзвінок і, якщо вам підходить, забронюємо місце.</p>
+      <form id="leadForm" novalidate>
+        <label for="leadName">Ім'я</label>
+        <input id="leadName" autocomplete="name" required>
+        <label for="leadPhone">Телефон</label>
+        <div class="phone">
+          <select id="leadCountry" aria-label="Код країни">
+            <option value="+380">🇺🇦 +380</option><option value="+48">🇵🇱 +48</option><option value="+49">🇩🇪 +49</option>
+            <option value="+420">🇨🇿 +420</option><option value="+40">🇷🇴 +40</option><option value="+39">🇮🇹 +39</option>
+            <option value="+34">🇪🇸 +34</option><option value="+44">🇬🇧 +44</option><option value="+1">🇺🇸 +1</option>
+            <option value="+995">🇬🇪 +995</option><option value="+373">🇲🇩 +373</option>
+          </select>
+          <input id="leadPhone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="67 123 45 67" required>
+        </div>
+        <label for="leadEmail">Email</label>
+        <input id="leadEmail" type="email" autocomplete="email" required>
+        <div class="err" id="leadErr"></div>
+        <button class="btn" type="submit">Надіслати заявку →</button>
+        <p class="small muted" style="margin-top:10px">Натискаючи кнопку, ви погоджуєтесь з обробкою персональних даних згідно з політикою конфіденційності Visual360.</p>
+      </form>
+    </div>
+    <div id="okView" hidden>
+      <h3>Заявку прийнято</h3>
+      <p class="muted">Ми зателефонуємо найближчим часом. Тримайте телефон поряд.</p>
+      <button class="btn x2" type="button">Добре</button>
+    </div>
+  </div>
+</div>
+
+<div class="cert" id="cert"><button type="button" aria-label="Закрити">✕</button><img id="certImg" src="" alt=""><a id="certPdf" href="#" target="_blank" rel="noopener">Завантажити PDF →</a></div>
+
+<script>
+  var CERT_BASE = 'https://lesson.visual360-studio.com/v360-landing/';
+  var CERTS = {
+    autodesk: { img:'creds/autodesk.jpg', pdf:null, label:'Autodesk Authorized Training Center · ORG10545' },
+    award:    { img:'creds/award.jpg', pdf:'creds/vybir-kraini.pdf', label:'Top Ukrainian Award 2025 — Вибір країни' },
+    iso:      { img:'creds/iso.jpg', pdf:'creds/iso-9001.pdf', label:'EN ISO 9001:2015 · ECJiP' }
+  };
+  var cert = document.getElementById('cert');
+  document.querySelectorAll('[data-cert]').forEach(function(b){ b.addEventListener('click', function(){
+    var c = CERTS[b.dataset.cert]; var i = document.getElementById('certImg'), l = document.getElementById('certPdf');
+    i.src = CERT_BASE + c.img; i.alt = c.label;
+    if (c.pdf) { l.href = CERT_BASE + c.pdf; l.style.display = ''; } else l.style.display = 'none';
+    cert.classList.add('open');
+  }); });
+  cert.addEventListener('click', function(e){ if (e.target.tagName !== 'IMG' && e.target.tagName !== 'A') cert.classList.remove('open'); });
+
+  // Калькулятор: та сама формула, що на v360-landing (m2 = моделі × ціна; ×3, ×12, ×42).
+  function plural(n,a,b,c){ var m=n%10,h=n%100; return (m===1&&h!==11)?a:(m>=2&&m<=4&&(h<10||h>=20))?b:c; }
+  function calc(){
+    var n=+document.getElementById('cModels').value, pr=+document.getElementById('cPrice').value, m2=n*pr;
+    document.getElementById('cModelsV').textContent = n+' моделей';
+    document.getElementById('cPriceV').textContent = '$'+pr;
+    var pts={1:0,2:m2,3:m2*3,6:m2*12,12:m2*42}, f=function(v){return '$'+v.toLocaleString('en-US');};
+    document.getElementById('cM2').textContent=f(pts[2]); document.getElementById('cM3').textContent=f(pts[3]);
+    document.getElementById('cM6').textContent=f(pts[6]); document.getElementById('cM12').textContent=f(pts[12]);
+    function inc(m){ if(m<=3) return pts[m]; if(m<=6) return pts[3]+(pts[6]-pts[3])*(m-3)/3; return pts[6]+(pts[12]-pts[6])*(m-6)/6; }
+    var sum=0, mo=0; while(sum<1200 && mo<12){ mo++; sum+=inc(mo); }
+    document.getElementById('cPay').textContent = sum>=1200 ? mo+' '+plural(mo,'місяць','місяці','місяців') : 'понад 12 місяців';
+  }
+  document.getElementById('cModels').addEventListener('input', calc);
+  document.getElementById('cPrice').addEventListener('input', calc);
+  calc();
+
+  // Куди йдуть заявки. Той самий формат, що й v360-landing/lead.php.
+  // TODO: перед запуском вказати правильний шлях (наприклад '../v360-landing/lead.php' або свій lead.php).
+  var LEAD_ENDPOINT = 'lead.php';
+
+  var modal = document.getElementById('modal');
+  function openM(e){ if(e) e.preventDefault(); modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); setTimeout(function(){document.getElementById('leadName').focus();},50); }
+  function closeM(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+  document.querySelectorAll('.js-open').forEach(function(b){ b.addEventListener('click', openM); });
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeM(); });
+  modal.querySelectorAll('.x,.x2').forEach(function(b){ b.addEventListener('click', closeM); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeM(); cert.classList.remove('open'); } });
+
+  function zid(){ try{ var z=localStorage.getItem('zid'); if(!z){ z='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return (c==='x'?r:(r&3|8)).toString(16);}); localStorage.setItem('zid',z);} return z; }catch(e){ return ''; } }
+
+  document.getElementById('leadForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var err = document.getElementById('leadErr');
+    var name = document.getElementById('leadName').value.trim();
+    var email = document.getElementById('leadEmail').value.trim();
+    var code = document.getElementById('leadCountry').value;
+    var cc = code.replace(/\D/g,'');
+    var d = document.getElementById('leadPhone').value.replace(/\D/g,'');
+    if (d.indexOf(cc)===0 && d.length >= cc.length+9) d = d.slice(cc.length);
+    if (d.charAt(0)==='0') d = d.slice(1);
+    if (name.length < 2) { err.textContent = "Вкажіть ім'я."; return; }
+    if (code==='+380' ? d.length!==9 : (d.length<6 || d.length>13)) { err.textContent = 'Перевірте номер телефону.'; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Перевірте email.'; return; }
+    err.textContent = '';
+    var params = new URLSearchParams({ name:name, email:email, phone:'+'+cc+d, page_url:location.href, product:'proryv', zid:zid() });
+    var sent = false;
+    try { if (navigator.sendBeacon) sent = navigator.sendBeacon(LEAD_ENDPOINT, new Blob([params.toString()],{type:'application/x-www-form-urlencoded'})); } catch(x){}
+    if (!sent) { try { fetch(LEAD_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString(),keepalive:true}); } catch(x){} }
+    if (typeof fbq === 'function') fbq('track','Lead');
+    document.getElementById('formView').hidden = true;
+    document.getElementById('okView').hidden = false;
+  });
+</script>
+</body>
+</html>
